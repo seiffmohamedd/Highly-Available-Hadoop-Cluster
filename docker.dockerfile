@@ -9,7 +9,6 @@ ENV DEBIAN_FRONTEND=noninteractive \
     HADOOP_CONF_DIR=/opt/hadoop/etc/hadoop \
     PATH=$PATH:/opt/hadoop/bin:/opt/hadoop/sbin:/opt/zookeeper/bin
 
-# Install base packages with version pinning
 RUN apt-get update && apt-get install -y \
     openjdk-8-jdk=8u372-ga~22.04.1 \
     openssh-server=1:8.9p1-3ubuntu0.6 \
@@ -23,27 +22,22 @@ RUN apt-get update && apt-get install -y \
     sudo=1.9.9-1ubuntu2.4 \
     && rm -rf /var/lib/apt/lists/*
 
-# Create hadoop user and directories
 RUN useradd -ms /bin/bash hadoop && \
     mkdir -p /opt/hadoop /opt/zookeeper/data && \
     chown -R hadoop:hadoop /opt
 
-# Switch to hadoop user
 USER hadoop
 WORKDIR /home/hadoop
 
-# Download and extract Hadoop
 RUN curl -L https://downloads.apache.org/hadoop/common/hadoop-${HADOOP_VERSION}/hadoop-${HADOOP_VERSION}.tar.gz | \
     tar -xz -C /opt && \
     mv /opt/hadoop-${HADOOP_VERSION} /opt/hadoop
 
-# Download and extract ZooKeeper
 RUN curl -L https://downloads.apache.org/zookeeper/zookeeper-${ZOOKEEPER_VERSION}/apache-zookeeper-${ZOOKEEPER_VERSION}-bin.tar.gz | \
     tar -xz -C /opt && \
     mv /opt/apache-zookeeper-${ZOOKEEPER_VERSION}-bin /opt/zookeeper && \
     cp /opt/zookeeper/conf/zoo_sample.cfg /opt/zookeeper/conf/zoo.cfg
 
-# Configure environment
 RUN echo "export JAVA_HOME=$JAVA_HOME" >> ~/.bashrc && \
     echo "export HADOOP_HOME=$HADOOP_HOME" >> ~/.bashrc && \
     echo "export PATH=$PATH" >> ~/.bashrc && \
@@ -51,11 +45,9 @@ RUN echo "export JAVA_HOME=$JAVA_HOME" >> ~/.bashrc && \
     ssh-keygen -t rsa -P "" -f ~/.ssh/id_rsa && \
     cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 
-# Copy configuration files
 COPY --chown=hadoop:hadoop config/ $HADOOP_CONF_DIR/
 COPY --chown=hadoop:hadoop zookeeper/conf/zoo.cfg $ZOOKEEPER_HOME/conf/
 
-# Configure Hadoop environment
 RUN echo "export HDFS_NAMENODE_USER=hadoop" >> $HADOOP_HOME/etc/hadoop/hadoop-env.sh && \
     echo "export HDFS_DATANODE_USER=hadoop" >> $HADOOP_HOME/etc/hadoop/hadoop-env.sh && \
     echo "export HDFS_SECONDARYNAMENODE_USER=hadoop" >> $HADOOP_HOME/etc/hadoop/hadoop-env.sh && \
@@ -68,7 +60,6 @@ RUN echo "export HDFS_NAMENODE_USER=hadoop" >> $HADOOP_HOME/etc/hadoop/hadoop-en
 COPY entrypoint.sh /entrypoint.sh
 RUN sudo chmod +x /entrypoint.sh
 
-# Ports exposure
 EXPOSE 8020 9000 9870 8088 2181 2888 3888 8485 8019 9864
 
 ENTRYPOINT ["/entrypoint.sh"]

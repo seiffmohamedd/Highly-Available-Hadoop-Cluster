@@ -10,6 +10,7 @@ case $(hostname) in
 esac
 
 if [[ $NODE_TYPE == "master" ]]; then
+  mkdir -p $ZOOKEEPER_HOME/data
   case $(hostname) in
     master1) echo "1" > $ZOOKEEPER_HOME/data/myid ;;
     master2) echo "2" > $ZOOKEEPER_HOME/data/myid ;;
@@ -17,34 +18,59 @@ if [[ $NODE_TYPE == "master" ]]; then
   esac
 fi
 
-# Start SSH
 sudo service ssh start
 
-# Start services based on node type
 if [[ $NODE_TYPE == "master" ]]; then
-  # Start ZooKeeper
   $ZOOKEEPER_HOME/bin/zkServer.sh start
   
-  # Start JournalNode
   hdfs --daemon start journalnode
   
-  # Initialize ZKFC if master1
   if [[ $(hostname) == "master1" ]]; then
-    hdfs zkfc -formatZK
-    # format namenode
+    until hdfs dfsadmin -report 2>/dev/null; do
+      echo "Waiting for JournalNodes to start..."
+      sleep 5
+    done
+    
+    hdfs namenode -initializeSharedEdits -force
+    
+    hdfs namenode -format -clusterId hacluster -force
+    
+    hdfs zkfc -formatZK -force
+    
+    hdfs --daemon start namenode
+    
+    until hdfs haadmin -getServiceState nn1 2>/dev/null | grep -q "active"; do
+      echo "Waiting for NameNode to become active..."
+      sleep 5
+    done
+    
+    for node in master2 master3; do
+      ssh -o StrictHostKeyChecking=no $node "hdfs namenode -bootstrapStandby -force"
+    done
+    
+    hdfs dfs -mkdir -p /shared/logs
+    hdfs dfs -chmod -R 777 /shared/logs
+  else
+    until nc -z master1 8020; do
+      echo "Waiting for master1 to initialize cluster..."
+      sleep 10
+    done
   fi
   
-  # Start NameNode and ZKFC
   hdfs --daemon start namenode
   hdfs --daemon start zkfc
   
-  # Start ResourceManager
   yarn --daemon start resourcemanager
 else
-  # Worker node services
+  until nc -z master1 8020; do
+    echo "Waiting for master1 NameNode to be available..."
+    sleep 10
+  done
   hdfs --daemon start datanode
   yarn --daemon start nodemanager
 fi
 
-# Keep container running
+echo "Starting health check server..."
+python3 -m http.server 8080 &
+
 tail -f /dev/null
