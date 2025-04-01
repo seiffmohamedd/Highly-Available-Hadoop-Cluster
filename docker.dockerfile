@@ -9,24 +9,41 @@ ENV DEBIAN_FRONTEND=noninteractive \
     HADOOP_CONF_DIR=/opt/hadoop/etc/hadoop \
     PATH=$PATH:/opt/hadoop/bin:/opt/hadoop/sbin:/opt/zookeeper/bin
 
-RUN apt-get update && apt install -y \
-    openjdk-8-jdk=8u372-ga~22.04.1 \
-    openssh-server=1:8.9p1-3ubuntu0.6 \
-    rsync=3.2.7-1ubuntu1 \
-    curl=7.81.0-1ubuntu1.15 \
-    wget \
+
+RUN apt-get update && apt-get install -y \
+    openjdk-8-jdk \
+    openssh-server \
+    sshpass \
+    rsync \
+    curl \
     nano \
-    net-tools=1.60+git20181103.0eebece-1ubuntu5 \
-    vim=2:8.2.3995-1ubuntu2.13 \
-    iputils-ping=3:20211215-1 \
-    netcat-openbsd=1.218-4ubuntu1 \
-    python3=3.10.12-1~22.04 \
-    sudo=1.9.9-1ubuntu2.4 \
+    wget \
+    net-tools \
+    vim \
+    iputils-ping \
+    netcat \
+    python3 \
+    procps \
     && rm -rf /var/lib/apt/lists/*
 
-    RUN useradd -ms /bin/bash hadoop && \
+
+
+RUN useradd -ms /bin/bash hadoop && \
     mkdir -p /opt/hadoop /opt/zookeeper/data && \
     chown -R hadoop:hadoop /opt
+
+# Step 3: Create users #update this in the script if this master1 then add user master1 , master2-> master2 and so on 
+# RUN useradd -m master1 && \
+#     useradd -m master2 && \
+#     useradd -m master3 && \
+#     useradd -m worker1
+
+RUN mkdir -p /var/run/sshd && \
+    ssh-keygen -t rsa -f /root/.ssh/id_rsa -q -N "" && \
+    cat /root/.ssh/id_rsa.pub >> /root/.ssh/authorized_keys && \
+    chmod 777 /root/.ssh/authorized_keys && \
+    echo "StrictHostKeyChecking no" >> /etc/ssh/ssh_config
+
 
 USER hadoop
 WORKDIR /home/hadoop
