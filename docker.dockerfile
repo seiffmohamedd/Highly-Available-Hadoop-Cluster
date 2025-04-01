@@ -9,11 +9,13 @@ ENV DEBIAN_FRONTEND=noninteractive \
     HADOOP_CONF_DIR=/opt/hadoop/etc/hadoop \
     PATH=$PATH:/opt/hadoop/bin:/opt/hadoop/sbin:/opt/zookeeper/bin
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt install -y \
     openjdk-8-jdk=8u372-ga~22.04.1 \
     openssh-server=1:8.9p1-3ubuntu0.6 \
     rsync=3.2.7-1ubuntu1 \
     curl=7.81.0-1ubuntu1.15 \
+    wget \
+    nano \
     net-tools=1.60+git20181103.0eebece-1ubuntu5 \
     vim=2:8.2.3995-1ubuntu2.13 \
     iputils-ping=3:20211215-1 \
@@ -22,7 +24,7 @@ RUN apt-get update && apt-get install -y \
     sudo=1.9.9-1ubuntu2.4 \
     && rm -rf /var/lib/apt/lists/*
 
-RUN useradd -ms /bin/bash hadoop && \
+    RUN useradd -ms /bin/bash hadoop && \
     mkdir -p /opt/hadoop /opt/zookeeper/data && \
     chown -R hadoop:hadoop /opt
 
@@ -45,16 +47,18 @@ RUN echo "export JAVA_HOME=$JAVA_HOME" >> ~/.bashrc && \
     ssh-keygen -t rsa -P "" -f ~/.ssh/id_rsa && \
     cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 
+RUN source ~/.bashrc
+
 COPY --chown=hadoop:hadoop config/ $HADOOP_CONF_DIR/
 COPY --chown=hadoop:hadoop zookeeper/conf/zoo.cfg $ZOOKEEPER_HOME/conf/
 
-RUN echo "export HDFS_NAMENODE_USER=hadoop" >> $HADOOP_HOME/etc/hadoop/hadoop-env.sh && \
-    echo "export HDFS_DATANODE_USER=hadoop" >> $HADOOP_HOME/etc/hadoop/hadoop-env.sh && \
-    echo "export HDFS_SECONDARYNAMENODE_USER=hadoop" >> $HADOOP_HOME/etc/hadoop/hadoop-env.sh && \
-    echo "export YARN_RESOURCEMANAGER_USER=hadoop" >> $HADOOP_HOME/etc/hadoop/hadoop-env.sh && \
-    echo "export YARN_NODEMANAGER_USER=hadoop" >> $HADOOP_HOME/etc/hadoop/hadoop-env.sh && \
-    echo "export HDFS_JOURNALNODE_USER=hadoop" >> $HADOOP_HOME/etc/hadoop/hadoop-env.sh && \
-    echo "export HDFS_ZKFC_USER=hadoop" >> $HADOOP_HOME/etc/hadoop/hadoop-env.sh \
+RUN echo "export HDFS_NAMENODE_USER=root" >> $HADOOP_HOME/etc/hadoop/hadoop-env.sh && \
+    echo "export HDFS_DATANODE_USER=root" >> $HADOOP_HOME/etc/hadoop/hadoop-env.sh && \
+    echo "export HDFS_SECONDARYNAMENODE_USER=root" >> $HADOOP_HOME/etc/hadoop/hadoop-env.sh && \
+    echo "export YARN_RESOURCEMANAGER_USER=root" >> $HADOOP_HOME/etc/hadoop/hadoop-env.sh && \
+    echo "export YARN_NODEMANAGER_USER=root" >> $HADOOP_HOME/etc/hadoop/hadoop-env.sh && \
+    echo "export HDFS_JOURNALNODE_USER=root" >> $HADOOP_HOME/etc/hadoop/hadoop-env.sh && \
+    echo "export HDFS_ZKFC_USER=root" >> $HADOOP_HOME/etc/hadoop/hadoop-env.sh \
     echo "export HADOOP_LOG_DIR=/opt/hadoop/logs" >> $HADOOP_HOME/etc/hadoop/hadoop-env.sh
 
 COPY entrypoint.sh /entrypoint.sh
