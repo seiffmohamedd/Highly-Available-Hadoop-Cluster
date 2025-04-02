@@ -1,4 +1,3 @@
-# Highly-Available-Hadoop-Cluster
 # Highly Available Hadoop Cluster with Docker
 
 ## Project Overview
