@@ -75,6 +75,4 @@ After successfully setting up the cluster manually, we containerize it to simpli
 - `entrypoint.sh`  - Startup script
 - `mapreduce-job.jar` - Sample Java MapReduce job
 - `Master & Worker Config Files` - Configuration Files with propertied needed for HA HDFS & YARN 
-- 
-
 
