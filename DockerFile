@@ -11,7 +11,7 @@ ENV HADOOP_VERSION=3.3.6 \
 
 RUN apt update
 RUN apt install openjdk-8-jdk -y
-RUN apt install ssh wget nano
+RUN apt install ssh wget nano -y
 RUN apt install netcat -y 
 RUN apt install net-tools -y
 RUN apt install sudo -y
@@ -38,43 +38,26 @@ RUN echo "hadoop ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 USER hadoop
 WORKDIR /home/hadoop
 
-
 RUN ssh-keygen -t rsa -P "" -f /home/hadoop/.ssh/id_rsa
 RUN cat ~/.ssh/id_rsa.pub >> /home/hadoop/.ssh/authorized_keys
 RUN chmod 777 /home/hadoop/.ssh/authorized_keys
 RUN echo "StrictHostKeyChecking no" >> /etc/ssh/ssh_config
 
+RUN touch /opt/zookeeper/conf/zoo.cfg
+RUN mkdir /opt/hadoop/tmp
+RUN mkdir /opt/hadoop/hdfs/namenode
+RUN mkdir /opt/hadoop/hdfs/journal
+RUN mkdir /opt/hadoop/hdfs/datanode
+RUN mkdir /opt/zookeeper/data
+COPY core-site.xml $HADOOP_CONF_DIR/core-site.xml
+COPY hdfs-site.xml $HADOOP_CONF_DIR/hdfs-site.xml
+COPY yarn-site.xml $HADOOP_CONF_DIR/yarn-site.xml
+COPY mapred-site.xml $HADOOP_CONF_DIR/mapred-site.xml
+COPY zoo.cfg /opt/zookeeper/conf/zoo.cfg
+COPY workers /opt/hadoop/etc/hadoop/workers
 
-USER hadoop
-WORKDIR /home/hadoop
 
+COPY entrypoint.sh /home/hadoop/entrypoint.sh
+RUN sudo chmod +x /home/hadoop/entrypoint.sh
 
-
-RUN echo "export JAVA_HOME=$JAVA_HOME" >> ~/.bashrc && \
-    echo "export HADOOP_HOME=$HADOOP_HOME" >> ~/.bashrc && \
-    echo "export PATH=$PATH" >> ~/.bashrc && \
-    echo "export HADOOP_CONF_DIR=$HADOOP_CONF_DIR" >> ~/.bashrc && \
-    ssh-keygen -t rsa -P "" -f ~/.ssh/id_rsa && \
-    cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
-
-RUN source ~/.bashrc
-
-COPY --chown=hadoop:hadoop config/ $HADOOP_CONF_DIR/
-COPY --chown=hadoop:hadoop zookeeper/conf/zoo.cfg $ZOOKEEPER_HOME/conf/
-
-RUN echo "export HDFS_NAMENODE_USER=root" >> $HADOOP_HOME/etc/hadoop/hadoop-env.sh && \
-    echo "export HDFS_DATANODE_USER=root" >> $HADOOP_HOME/etc/hadoop/hadoop-env.sh && \
-    echo "export HDFS_SECONDARYNAMENODE_USER=root" >> $HADOOP_HOME/etc/hadoop/hadoop-env.sh && \
-    echo "export YARN_RESOURCEMANAGER_USER=root" >> $HADOOP_HOME/etc/hadoop/hadoop-env.sh && \
-    echo "export YARN_NODEMANAGER_USER=root" >> $HADOOP_HOME/etc/hadoop/hadoop-env.sh && \
-    echo "export HDFS_JOURNALNODE_USER=root" >> $HADOOP_HOME/etc/hadoop/hadoop-env.sh && \
-    echo "export HDFS_ZKFC_USER=root" >> $HADOOP_HOME/etc/hadoop/hadoop-env.sh \
-    echo "export HADOOP_LOG_DIR=/opt/hadoop/logs" >> $HADOOP_HOME/etc/hadoop/hadoop-env.sh
-
-# Copy configs and entrypoint
-COPY MasterConfig/* /opt/hadoop/etc/hadoop/
-COPY entrypoint.sh /entrypoint.sh
-RUN sudo chmod +x /entrypoint.sh
-EXPOSE 8020 9000 9870 8088 2181 2888 3888 8485 8019 9864
-
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["./entrypoint.sh"]
