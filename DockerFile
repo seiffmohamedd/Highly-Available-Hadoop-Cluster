@@ -78,6 +78,8 @@ RUN echo "export HDFS_NAMENODE_USER=root" >> $HADOOP_HOME/etc/hadoop/hadoop-env.
     echo "export HDFS_ZKFC_USER=root" >> $HADOOP_HOME/etc/hadoop/hadoop-env.sh \
     echo "export HADOOP_LOG_DIR=/opt/hadoop/logs" >> $HADOOP_HOME/etc/hadoop/hadoop-env.sh
 
+# Copy configs and entrypoint
+COPY MasterConfig/* /opt/hadoop/etc/hadoop/
 COPY entrypoint.sh /entrypoint.sh
 RUN sudo chmod +x /entrypoint.sh
 
