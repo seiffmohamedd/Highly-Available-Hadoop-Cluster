@@ -65,21 +65,16 @@ After successfully setting up the cluster manually, we containerize it to simpli
    ```
 4. **Run a sample MapReduce job** inside the cluster.
 
-## Bonus
 
-- Setup a remote Docker client to control the cluster.
-- Configure a multi-host cluster using **Docker Swarm**.
 
 ## Files Included
 
 - `setup_history.txt` - Commands used for manual setup
 - `Dockerfile` - Image definition
-- `docker-compose.yml` - Cluster orchestration
-- `entrypoint.sh` (if applicable) - Startup script
+- `docker-compose.yml` - Cluster 
+- `entrypoint.sh`  - Startup script
 - `mapreduce-job.jar` - Sample Java MapReduce job
+- `Master & Worker Config Files` - Configuration Files with propertied needed for HA HDFS & YARN 
+- 
 
-## Authors
-
-- **Youssef Etman**
-- **Ibrahim Elsadek**
 
