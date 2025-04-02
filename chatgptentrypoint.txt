@@ -33,8 +33,7 @@ if [[ $NODE_TYPE == "master" ]]; then
     
     hdfs namenode -initializeSharedEdits -force
     
-    hdfs namenode -format
-
+    hdfs namenode -format -clusterId hacluster -force
     
     hdfs zkfc -formatZK -force
     

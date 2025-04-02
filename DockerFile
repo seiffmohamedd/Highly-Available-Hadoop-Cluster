@@ -48,7 +48,7 @@ RUN mkdir /opt/hadoop/tmp
 RUN mkdir /opt/hadoop/hdfs/namenode
 RUN mkdir /opt/hadoop/hdfs/journal
 RUN mkdir /opt/hadoop/hdfs/datanode
-RUN mkdir /opt/zookeeper/data
+
 COPY core-site.xml $HADOOP_CONF_DIR/core-site.xml
 COPY hdfs-site.xml $HADOOP_CONF_DIR/hdfs-site.xml
 COPY yarn-site.xml $HADOOP_CONF_DIR/yarn-site.xml

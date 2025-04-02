@@ -67,6 +67,10 @@
         <name>dfs.namenode.name.dir</name>
         <value>/opt/hadoop/hdfs/namenode</value>
     </property>
+     <property>
+        <name>dfs.datanode.data.dir</name>
+        <value>/opt/hadoop/hdfs/datanode</value>
+    </property>
 <property>
     <name>dfs.journalnode.edits.dir</name>
     <value>/opt/hadoop/hdfs/journal</value>
