@@ -36,27 +36,27 @@
     </property>
  <property>
         <name>dfs.namenode.rpc-address.hacluster.nn1</name>
-        <value>master1:8020</value>
+        <value>master11:8020</value>
     </property>
     <property>
         <name>dfs.namenode.rpc-address.hacluster.nn2</name>
-        <value>master2:8020</value>
+        <value>master22:8020</value>
     </property>
  <property>
         <name>dfs.namenode.rpc-address.hacluster.nn3</name>
-        <value>master3:8020</value>
+        <value>master33:8020</value>
     </property>
 <property>
         <name>dfs.namenode.http-address.hacluster.nn1</name>
-        <value>master1:9870</value>
+        <value>master11:9870</value>
     </property>
     <property>
         <name>dfs.namenode.http-address.hacluster.nn2</name>
-        <value>master2:9870</value>
+        <value>master22:9870</value>
     </property>
  <property>
         <name>dfs.namenode.http-address.hacluster.nn3</name>
-        <value>master3:9870</value>
+        <value>master33:9870</value>
     </property>
 
     <property>
@@ -77,7 +77,7 @@
 </property>
  <property>
         <name>dfs.namenode.shared.edits.dir</name>
-        <value>qjournal://master1:8485;master2:8485;master3:8485/hacluster</value>
+        <value>qjournal://master11:8485;master22:8485;master33:8485/hacluster</value>
     </property>
 
 <property>
@@ -95,7 +95,7 @@
 
 <property>
         <name>ha.zookeeper.quorum</name>
-        <value>master1:2181,master2:2181,master3:2181</value>
+        <value>master11:2181,master22:2181,master33:2181</value>
     </property>
 <property>
     <name>dfs.ha.automatic-failover.enabled</name>

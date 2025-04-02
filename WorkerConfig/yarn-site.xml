@@ -19,7 +19,7 @@
     </property>
 <property>
   <name>yarn.nodemanager.hostname</name>
-  <value>worker1</value>
+  <value>worker11</value>
 </property>
 <property>
     <name>yarn.resourcemanager.hostname</name>

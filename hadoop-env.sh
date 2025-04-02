@@ -1,0 +1,10 @@
+export HADOOP_OS_TYPE=${HADOOP_OS_TYPE:-$(uname -s)}
+export HDFS_NAMENODE_USER=hadoop
+export HDFS_DATANODE_USER=hadoop
+export HDFS_SECONDARYNAMENODE_USER=hadoop
+export YARN_RESOURCEMANAGER_USER=hadoop
+export YARN_NODEMANAGER_USER=hadoop
+export HDFS_JOURNALNODE_USER=hadoop
+export HDFS_ZKFC_USER=hadoop
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+export HADOOP_LOG_DIR=/opt/hadoop/logs

@@ -25,28 +25,28 @@
 
   <property>
     <name>yarn.resourcemanager.hostname.rm1</name>
-    <value>master1</value>
+    <value>master11</value>
   </property>
   <property>
     <name>yarn.resourcemanager.hostname.rm2</name>
-    <value>master2</value>
+    <value>master22</value>
   </property>
   <property>
     <name>yarn.resourcemanager.hostname.rm3</name>
-    <value>master3</value>
+    <value>master33</value>
   </property>
 
   <property>
     <name>yarn.resourcemanager.webapp.address.rm1</name>
-    <value>master1:8088</value>
+    <value>master11:8088</value>
   </property>
   <property>
     <name>yarn.resourcemanager.webapp.address.rm2</name>
-    <value>master2:8088</value>
+    <value>master22:8088</value>
   </property>
   <property>
     <name>yarn.resourcemanager.webapp.address.rm3</name>
-    <value>master3:8088</value>
+    <value>master33:8088</value>
   </property>
 
   <property>
@@ -56,7 +56,7 @@
 
   <property>
     <name>yarn.resourcemanager.zk-address</name>
-    <value>master1:2181,master2:2181,master3:2181</value>
+    <value>master11:2181,master22:2181,master33:2181</value>
   </property>
   <property>
     <name>yarn.resourcemanager.ha.automatic-failover.enabled</name>

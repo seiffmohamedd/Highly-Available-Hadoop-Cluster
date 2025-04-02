@@ -38,13 +38,14 @@ RUN echo "hadoop ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 USER hadoop
 WORKDIR /home/hadoop
 
-RUN ssh-keygen -t rsa -P "" -f /home/hadoop/.ssh/id_rsa
-RUN cat ~/.ssh/id_rsa.pub >> /home/hadoop/.ssh/authorized_keys
-RUN chmod 777 /home/hadoop/.ssh/authorized_keys
-RUN echo "StrictHostKeyChecking no" >> /etc/ssh/ssh_config
+RUN ssh-keygen -t rsa -P "" -f ~/.ssh/id_rsa
+RUN cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+RUN chmod 600 ~/.ssh/authorized_keys
+
 
 RUN touch /opt/zookeeper/conf/zoo.cfg
 RUN mkdir /opt/hadoop/tmp
+RUN mkdir /opt/hadoop/hdfs
 RUN mkdir /opt/hadoop/hdfs/namenode
 RUN mkdir /opt/hadoop/hdfs/journal
 RUN mkdir /opt/hadoop/hdfs/datanode
@@ -53,6 +54,7 @@ COPY core-site.xml $HADOOP_CONF_DIR/core-site.xml
 COPY hdfs-site.xml $HADOOP_CONF_DIR/hdfs-site.xml
 COPY yarn-site.xml $HADOOP_CONF_DIR/yarn-site.xml
 COPY mapred-site.xml $HADOOP_CONF_DIR/mapred-site.xml
+COPY hadoop-env.sh $HADOOP_CONF_DIR/hadoop-env.sh
 COPY zoo.cfg /opt/zookeeper/conf/zoo.cfg
 COPY workers /opt/hadoop/etc/hadoop/workers
 
