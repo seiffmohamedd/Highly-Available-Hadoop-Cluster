@@ -34,7 +34,7 @@ We manually set up a Hadoop cluster with **HDFS High Availability (HA) and YARN 
 
 After successfully setting up the cluster manually, we containerize it to simplify deployment.
 
-#### Deliverables:
+
 
 - **Dockerfile**: Builds a reusable image for both master and worker nodes.
 - **Docker Compose file**: Defines the cluster setup, network, volumes, dependencies, and health checks.
@@ -57,7 +57,7 @@ After successfully setting up the cluster manually, we containerize it to simpli
    ```
 2. **Deploy the cluster using Docker Compose**:
    ```bash
-   docker-compose up -d
+   docker-compose up --build
    ```
 3. **Check services**:
    ```bash
