@@ -75,3 +75,5 @@ echo "Starting health check server..."
 python3 -m http.server 8080 &
 
 tail -f /dev/null
+
+sleep infinity 

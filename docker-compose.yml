@@ -2,9 +2,7 @@ version: '3.9'
 
 services:
   master1:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    build: .
     container_name: master1
     hostname: master1
     ports:
@@ -13,12 +11,8 @@ services:
       - "2181:2181"
     environment:
       - HADOOP_NODENAME=nn1
-      - JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
-      - HADOOP_HOME=/opt/hadoop
     volumes:
       - hadoop_data_master1:/opt/hadoop/hdfs
-      - ./config:/opt/hadoop/etc/hadoop
-      - shared-mr:/home/hadoop/mapreduce
     networks:
       hadoop_net:
         ipv4_address: 172.19.0.2
@@ -27,16 +21,9 @@ services:
       interval: 20s
       timeout: 10s
       retries: 5
-    deploy:
-      resources:
-        limits:
-          cpus: "1.0"
-          memory: 1G
 
   master2:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    build: .
     container_name: master2
     hostname: master2
     ports:
@@ -44,12 +31,8 @@ services:
       - "2182:2181"
     environment:
       - HADOOP_NODENAME=nn2
-      - JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
-      - HADOOP_HOME=/opt/hadoop
     volumes:
       - hadoop_data_master2:/opt/hadoop/hdfs
-      - ./config:/opt/hadoop/etc/hadoop
-      - shared-mr:/home/hadoop/mapreduce
     networks:
       hadoop_net:
         ipv4_address: 172.19.0.3
@@ -60,16 +43,9 @@ services:
       interval: 20s
       timeout: 10s
       retries: 5
-    deploy:
-      resources:
-        limits:
-          cpus: "1.0"
-          memory: 1G
 
   master3:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    build: .
     container_name: master3
     hostname: master3
     ports:
@@ -77,12 +53,8 @@ services:
       - "2183:2181"
     environment:
       - HADOOP_NODENAME=nn3
-      - JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
-      - HADOOP_HOME=/opt/hadoop
     volumes:
       - hadoop_data_master3:/opt/hadoop/hdfs
-      - ./config:/opt/hadoop/etc/hadoop
-      - shared-mr:/home/hadoop/mapreduce
     networks:
       hadoop_net:
         ipv4_address: 172.19.0.4
@@ -93,45 +65,24 @@ services:
       interval: 20s
       timeout: 10s
       retries: 5
-    deploy:
-      resources:
-        limits:
-          cpus: "1.0"
-          memory: 1G
 
   worker1:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    build: .
     container_name: worker1
     hostname: worker1
-    environment:
-      - HADOOP_NODENAME=dn1
-      - JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
-      - HADOOP_HOME=/opt/hadoop
     volumes:
       - hadoop_data_worker:/opt/hadoop/hdfs
-      - ./config:/opt/hadoop/etc/hadoop
-      - shared-mr:/home/hadoop/mapreduce
     networks:
       hadoop_net:
         ipv4_address: 172.19.0.5
     depends_on:
       - master1
-      - master2
-      - master3
-    deploy:
-      resources:
-        limits:
-          cpus: "0.5"
-          memory: 512M
 
 volumes:
   hadoop_data_master1:
   hadoop_data_master2:
   hadoop_data_master3:
   hadoop_data_worker:
-  shared-mr:
 
 networks:
   hadoop_net:
