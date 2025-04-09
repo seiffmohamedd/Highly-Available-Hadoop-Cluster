@@ -1,0 +1,10 @@
+    1  jps
+    2  yarn rmadmin -getAllServiceState
+    3  hdfs haadmin -getAllServiceState
+    4  clear
+    5  hdfs dfs -mkdir -p /user/hadoop/input
+    6  echo "Hello World Hello Hadoop" > test.txt
+    7  hdfs dfs -put test.txt /user/hadoop/input/
+    8  yarn jar /opt/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-*.jar   wordcount   -Dmapreduce.map.memory.mb=512   -Dmapreduce.reduce.memory.mb=512   /user/hadoop/input   /user/hadoop/output
+    9  hdfs dfs -cat /user/hadoop/output/*
+   10  history

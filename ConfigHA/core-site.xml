@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 <!--
   Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,25 +17,14 @@
 <!-- Put site-specific property overrides in this file. -->
 
 <configuration>
-<property>
-        <name>mapreduce.framework.name</name>
-        <value>yarn</value>
-</property>
-<property>
-        <name>mapreduce.application.classpath</name>
-        <value>$HADOOP_MAPRED_HOME/share/hadoop/mapreduce/*:$HADOOP_MAPRED_HOME/share/hadoop/mapreduce/lib-examples/*</value>
-</property>
-<property>
-    <name>yarn.app.mapreduce.am.env</name>
-    <value>HADOOP_MAPRED_HOME=/opt/hadoop</value>
-</property>
-<property>
-    <name>mapreduce.map.env</name>
-    <value>HADOOP_MAPRED_HOME=/opt/hadoop</value>
-</property>
-<property>
-    <name>mapreduce.reduce.env</name>
-    <value>HADOOP_MAPRED_HOME=/opt/hadoop</value>
-</property>
-
+  <property>
+      <name>fs.defaultFS</name>
+      <value>hdfs://hacluster</value>
+  </property>
+  
+  <property>
+      <name>ha.zookeeper.quorum</name>
+      <value>master11:2181,master22:2181,master33:2181</value>
+  </property>
+  
 </configuration>

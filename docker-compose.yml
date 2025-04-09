@@ -4,18 +4,25 @@ services:
     container_name: master11
     hostname: master11
     ports:
-      - "19870:9870"    # NameNode Web UI (original: 9870)
-      - "18088:8088"    # ResourceManager Web UI (original: 8088)
-      - "12181:2181"    # ZooKeeper (original: 2181)
-      - "19000:9000"    # NameNode (original: 9000)
+      - "19870:9870"    
+      - "18088:8088"    
+      - "12181:2181"    
+      - "19000:9000"    
     environment:
       - HADOOP_NODENAME=nn1
+      - JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+      - HADOOP_HOME=/opt/hadoop 
+      - ZOOKEEPER_HOME=/opt/zookeeper
+      - HADOOP_CONF_DIR=/opt/hadoop/etc/hadoop
+      - PATH=$PATH:/opt/hadoop/bin:/opt/hadoop/sbin:/opt/zookeeper/bin
+      - HADOOP_LOG_DIR=/opt/hadoop/logs
     volumes:
       - hadoop_data_master11:/opt/hadoop/hdfs
     networks:
       hadoop_net:
+
     healthcheck:
-      test: ["CMD", "jps"]
+      test: ["CMD", "jps | grep -i namenode"]
       interval: 20s
       timeout: 10s
       retries: 5
@@ -25,12 +32,18 @@ services:
     container_name: master22
     hostname: master22
     ports:
-      - "19871:9870"    # NameNode Web UI (original: 9871:9870)
-      - "18089:8088"    # ResourceManager Web UI (original: 8089:8088)
-      - "12182:2181"    # ZooKeeper (original: 2182:2181)
-      - "19001:9000"    # NameNode (original: 9001:9000)
+      - "19871:9870"    
+      - "18089:8088"    
+      - "12182:2181"    
+      - "19001:9000"    
     environment:
       - HADOOP_NODENAME=nn2
+      - JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+      - HADOOP_HOME=/opt/hadoop 
+      - ZOOKEEPER_HOME=/opt/zookeeper
+      - HADOOP_CONF_DIR=/opt/hadoop/etc/hadoop
+      - PATH=$PATH:/opt/hadoop/bin:/opt/hadoop/sbin:/opt/zookeeper/bin
+      - HADOOP_LOG_DIR=/opt/hadoop/logs
     volumes:
       - hadoop_data_master22:/opt/hadoop/hdfs
     networks:
@@ -48,12 +61,18 @@ services:
     container_name: master33
     hostname: master33
     ports:
-      - "19872:9870"    # NameNode Web UI (original: 9872:9870)
-      - "18090:8088"    # ResourceManager Web UI (original: 8090:8088)
-      - "12183:2181"    # ZooKeeper (original: 2183:2181)
-      - "19002:9000"    # NameNode (original: 9002:9000)
+      - "19872:9870"   
+      - "18090:8088"    
+      - "12183:2181"    
+      - "19002:9000"    
     environment:
       - HADOOP_NODENAME=nn3
+      - JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+      - HADOOP_HOME=/opt/hadoop 
+      - ZOOKEEPER_HOME=/opt/zookeeper
+      - HADOOP_CONF_DIR=/opt/hadoop/etc/hadoop
+      - PATH=$PATH:/opt/hadoop/bin:/opt/hadoop/sbin:/opt/zookeeper/bin
+      - HADOOP_LOG_DIR=/opt/hadoop/logs
     volumes:
       - hadoop_data_master33:/opt/hadoop/hdfs
     networks:
@@ -69,9 +88,7 @@ services:
   worker11:
     build: .
     container_name: worker11
-    hostname: worker11
-    ports:
-      - "19864:9864"    # DataNode Web UI (original: 9864)
+    hostname: worker11   
     volumes:
       - hadoop_data_worker1:/opt/hadoop/hdfs
     networks:

@@ -1,0 +1,70 @@
+1  apt update
+    2  apt install openjdk-8-jdk -y
+    3  java -version
+    4  adduser master1
+    5  su - master1
+    6  usermod -aG wheel master1
+    7  usermod -aG sudo master1
+    8  su - master1
+    9  visudo
+   10  apt update
+   11  apt install nano
+   12  apt install ssh
+   13  apt install wget
+   14  nano visudo
+   15  visudo
+   16  sudo visudo
+   17  usermod -aG sudo master1
+   18  groups
+   19  exit
+   20  su - master1
+   21  apt update
+   22  apt install sudo -y
+   23  usermod -aG sudo master1
+   24  echo "master1 ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+   25  docker restart 4de
+   26  exit
+   27  ls
+   28  ls /opt
+   29  java -version
+   30  nano /etc/profike
+   31  nano /etc/profile
+   32  source /etc/profile
+   33  hadoop version
+   34  service ssh start
+   35  systemctl enable ssh
+   36  ssh worker1
+   37  cat ~/.ssh/authorized_keys
+   38  ssh-keygen -t rsa -P "" -f ~/.ssh/id_rsa
+   39  cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+   40  nano ~/.ssh/authorized_keys
+   41  cat ~/.ssh/authorized_keys
+   42  service ssh restart
+   43  systemctl enable ssh
+   44  ssh worker1
+   45  clear
+   46  export HDFS_NAMENODE_USER=root
+   47  export HDFS_DATANODE_USER=root
+   48  export HDFS_SECONDARYNAMENODE_USER=root
+   49  export YARN_RESOURCEMANAGER_USER=root
+   50  nano /opt/hadoop/etc/hadoop/hadoop-env.sh
+   51  source /opt/hadoop/etc/hadoop/hadoop-env.sh
+   52  cd /opt/hadoop/etc/hadoop/
+   53  ls
+   54  nano core-site.xml
+   55  mkdir -p /opt/hadoop/tmp
+   56  chmod 777 /opt/hadoop/tmp/
+   57  nano hdfs-site.xml
+   58  mkdir -p /opt/hadoop/hdfs/namenode
+   59  mkdir -p /opt/hadoop/hdfs/journal
+   60  chmod 777 /opt/hadoop/hdfs/namenode/
+   61  chmod 777 /opt/hadoop/hdfs/journal/
+   62  nano mapred-site.xml
+   63  nano yarn-site.xml
+   64  hadoop version
+   65  clear
+   66  exit
+   67  nano ~/.bashrc
+   68  nano /opt/hadoop/etc/hadoop/hadoop-env.sh
+   69  exit
+   70  history

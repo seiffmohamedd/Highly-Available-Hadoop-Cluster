@@ -1,0 +1,207 @@
+   1  exit
+    2  clear
+    3  source /etc/profile
+    4  source ~/.bashrc
+    5  ls
+    6  jps
+    7  nano /opt/zookeeper/conf/zoo.cfg
+    8  jps
+    9  /opt/zookeeper/bin/zkServer.sh start
+   10  jps
+   11  /opt/zookeeper/bin/zkServer.sh start
+   12  jps
+   13  /opt/zookeeper/bin/zkServer.sh start
+   14  jps
+   15  nano /opt/zookeeper/conf/zoo.cfg
+   16  mkdir -p /opt/zookeeper/data
+   17  chmod 777 /opt/zookeeper/data
+   18  jps
+   19  /opt/zookeeper/bin/zkServer.sh start
+   20  jps
+   21  cat /opt/zookeeper/logs/zookeeper.out
+   22  echo "2" > /opt/zookeeper/data/myid
+   23  ls -l /opt/zookeeper/data
+   24  netstat -tulnp | grep 2181
+   25  apt install net-tools
+   26  netstat -tulnp | grep 2181
+   27  /opt/zookeeper/bin/zkServer.sh restart
+   28  jps
+   29  echo stat | nc master2 2181
+   30  jps
+   31  /opt/hadoop/sbin/hadoop-daemon.sh start journalnode
+   32  jps
+   33  /opt/hadoop/sbin/hadoop-daemon.sh start namenode
+   34  jps
+   35  hdfs --daemon start namenode
+   36  jps
+   37  jps | grep JournalNode
+   38  cat /opt/hadoop/logs/hadoop-$(whoami)-namenode-$(hostname).log | tail -50
+   39  hdfs namenode -bootstrapStandby
+   40  clear
+   41  jps
+   42  hdfs namenode -bootstrapStandby
+   43  clear
+   44  nc -zv master1 8020
+   45  ssh master1
+   46  cat /opt/hadoop/etc/hadoop/core-site.xml
+   47  apt install -y netcat
+   48  nc -zv master1 8020
+   49  /opt/hadoop/logs/hadoop-$(whoami)-namenode-$(hostname).log
+   50  whoami
+   51  sudo /opt/hadoop/logs/hadoop-$(whoami)-namenode-$(hostname).log
+   52  cat /opt/hadoop/logs/hadoop-$(whoami)-namenode-$(hostname).log
+   53  nc -zv master1 8020
+   54  clear
+   55  nc -zv master1 8020
+   56  nc -zv master1 8021
+   57  nc -zv master1 9000
+   58  cd /opt/hadoop/etc/hadoop/
+   59  nano hdfs-site.xml
+   60  hdfs namenode -bootstrapStandby
+   61  jps
+   62  hdfs --daemon start namenode
+   63  jps
+   64  clear
+   65  jps
+   66  nc -zv master1 9000
+   67  hdfs --daemon start zkfc
+   68  hdfs --daemon stop zkfc
+   69  hdfs --daemon start zkfc
+   70  root@master1:/opt/hadoop/etc/hadoop# echo stat | nc localhost 2181
+   71  clear
+   72  echo stat | nc localhost 2181
+   73  nano /opt/zookeeper/conf/zoo.cfg
+   74  /opt/zookeeper/bin/zkServer.sh restart
+   75  jps
+   76  echo stat | nc localhost 2181
+   77  echo "hdfs - nice -10" >> /etc/security/limits.conf
+   78  ulimit -a
+   79  echo stat | nc localhost 2181
+   80  nano hdfs-site.xml
+   81  /opt/zookeeper/bin/zkServer.sh stop
+   82  /opt/zookeeper/bin/zkServer.sh start
+   83  jps
+   84  hdfs --daemon stop journalnode
+   85  jps
+   86  hdfs --daemon start journalnode
+   87  jps
+   88  clear
+   89  jps
+   90  hdfs --daemon stop namenode
+   91  hdfs --daemon start namenode
+   92  jps
+   93  clear
+   94  jps
+   95  hdfs --daemon start zkfc
+   96  echo stat | nc localhost 2181
+   97  hdfs haadmin -getAllServiceState
+   98  ps aux | grep -i zkfc
+   99  ps aux | grep journalnode
+  100  hdfs haadmin -transitionToActive --forceactive nn2
+  101  hdfs haadmin -getAllServiceState
+  102  hdfs --daemon stop namenode
+  103  hdfs --daemon stop zkfc
+  104  hdfs --daemon stop journalnode
+  105  hdfs --daemon start journalnode
+  106  clear
+  107  jps
+  108  --daemon start namenode
+  109  hdfs --daemon start namenode
+  110  hdfs --daemon start zkfc
+  111  jps
+  112  mkdir -p /opt/hadoop/hdfs/journal/hacluster
+  113  rm -rf /opt/hadoop/hdfs/journal/*
+  114  clear
+  115  jps
+  116  hdfs --daemon start namenode
+  117  clear
+  118  jps
+  119  clear
+  120  jps
+  128  clear
+  129  tail -50 /opt/hadoop/logs/hadoop-$(whoami)-journalnode-*.log
+  130  ls /opt/hadoop/hdfs/journal/hacluster
+  131  mkdir -p /opt/hadoop/hdfs/journal/hacluster
+  132  chmod 777 /opt/hadoop/hdfs/journal/hacluster
+  133  zkServer.sh status
+  134  /opt/zookeeper/bin/zkServer.sh status
+  135  clear
+  136  jps
+  137  pkill -f JournalNode
+  138  pkill -f QuorumPeerMain
+  139  pkill -f DFSZKFailoverController
+  140  nano /opt/hadoop/etc/hadoop/hadoop-env.sh
+  141  source /opt/hadoop/etc/hadoop/hadoop-env.sh
+  142  hdfs --daemon start journalnode
+  143  clear
+  144  jps
+  145  /opt/zookeeper/bin/zkServer.sh start
+  146  hdfs --daemon start namenode
+  147  clear
+  148  jps
+  149  yarn --daemon start resourcemanager
+  150  clear
+  151  jps
+  152  yarn --daemon start resourcemanager
+  153  jps
+  154  clea
+  155  clear
+  156  jps
+  157  clear
+  158  jps
+  159  echo stat | nc localhost 2181
+  160  rm -rf /opt/hadoop/hdfs/journal/hacluster
+  161  hdfs --daemon stop journalnode
+  162  clear
+  163  jps
+  164  rm -rf /opt/hadoop/hdfs/journal/hacluster
+  165  hdfs --daemon start namenode
+  166  jps
+  167  nano hdfs-site.xml
+  168  hdfs --daemon stop namenode
+  169  clear
+  170  jps
+  171  hdfs --daemon start namenode
+  172  clear
+  173  jps
+  174  clear
+  175  echo stat | nc localhost 2181
+  176  stop-all.sh
+  177  clear
+  178  jps
+  179  pkill -f pkill -f QuorumPeerMain
+  180  pkill -f QuorumPeerMain
+  181  jps
+  182  clear
+  183  /opt/zookeeper/bin/zkServer.sh start
+  184  hdfs --daemon start namenode
+  185  jps
+  186  pkill -f QuorumPeerMain
+  187  jps
+  188  clear
+  189  hdfs --daemon start journalnode
+  190  jps
+  191  hdfs namenode -bootstrapStandby
+  192  clear
+  193  jps
+  194  hdfs --daemon start namenode
+  195  hdfs --daemon stop namenode
+  196  kps
+  197  jps
+  198  clear
+  199  netstat -tulnp | grep 8020
+  200  hdfs --daemon start namenode
+  201  netstat -tulnp | grep 8020
+  202  jps
+  203  netstat -tulnp | grep 8020
+  204  clear
+  205  jps
+  206  iptables -L | grep 8020
+  207  systemctl stop firewalld
+  208  apt install iptables
+  209  clear
+  210  iptables -L | grep 8020
+  211  sudo iptables -L | grep 8020
+  212  exot
+  213  exit
+  214  history

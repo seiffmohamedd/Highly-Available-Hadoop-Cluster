@@ -34,15 +34,7 @@ if [[ $NODE_TYPE == "master" ]]; then
     hdfs namenode -format
     hdfs zkfc -formatZK -force
     hdfs --daemon start namenode
-    
-    # until hdfs haadmin -getServiceState nn1 2>/dev/null | grep -q "active"; do
-    #   echo "Waiting for NameNode to become active..."
-    #   sleep 5
-    # done
-    
-    # for node in master22 master33; do
-    #   hdfs namenode -bootstrapStandby -force
-    # done
+
     
     hdfs dfs -mkdir -p /shared/logs
     hdfs dfs -chmod -R 777 /shared/logs
@@ -62,9 +54,9 @@ else
   yarn --daemon start nodemanager
 fi
 
-echo "Starting health check server..."
-python3 -m http.server 8080 &
+# echo "Starting health check server..."
+# python3 -m http.server 8080 &
 
-tail -f /dev/null
+# tail -f /dev/null
 
 sleep infinity 

@@ -1,0 +1,6 @@
+docker run -it \
+  --hostname worker2 \
+  --name worker2 \
+  --network hadoop_net \
+  -v hdfs-dn2:/opt/hadoop/hdfs/datanode \
+hadoop-project-worker
